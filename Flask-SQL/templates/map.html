@@ -12,6 +12,7 @@
     <script>
     var globalMap;
     var markers = [];
+    var increment = 0;
     function initMap()
     {
         var Aarhus = {lat: 56.1629, lng: 10.2039};
@@ -21,6 +22,7 @@
     function setMarker()
     {
       deleteMarkers();
+      console.log(getData())
       {% for post in posts %}
       var x = {{post.x}};
       var y = {{post.y}};
@@ -29,6 +31,14 @@
       marker.setMap(globalMap);
       markers.push(marker);
       {% endfor %}
+    }
+    function getData()
+    {
+      var names = [];
+      {% for item in map_data()%}
+        names.push({{item.x}});
+      {%endfor%}
+      return names;
     }
     function deleteMarkers()
     {
@@ -42,6 +52,7 @@
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdpjLyPIWGT6BWAqpTBBNknZGPenAo7DA&callback=initMap">
     </script>
+    <script type = "type/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <br>
 <br>
     <div class="content-section">
