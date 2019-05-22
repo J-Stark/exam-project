@@ -7,30 +7,9 @@ headers = {
 }
 
 
-gpsdata = (dat[1]["gps_1"])
-data = (dat[1]["time"])
-data = data.replace("T", " ")
-print(dat[1]["device_id"])
-print(gpsdata[0])
-print(gpsdata[1])
-print(data)
-print(gpsdata[1])
-
 def request():
     response = requests.get('https://bicycle1.data.thethingsnetwork.org/api/v2/query?last=1h', headers=headers)
     return json.loads(response.text)
-
-
-def get():
-    count = 0
-    for gps in request():
-        print(request()[count])
-        count += 1
-
-    devID = dat[1]["device_id"]
-    bike_id = devID.replace("bicycle", "")
-    formattedData = {'x' : gpsdata[0], 'y': gpsdata[1], 'bike_id': bike_id, 'time': data}
-    return formattedData
 
 
 def format(gpsdata):
@@ -40,3 +19,16 @@ def format(gpsdata):
     gpsdata = gpsdata.replace("]", "")
     gpsdata = gpsdata.split(" ")
     return gpsdata
+
+
+def get():
+    bike_id = 0
+    listOfBikes = []
+    for gps in request():
+        gpsData = format(request()[bike_id]["gps_1"])
+        time = request()[bike_id]["time"]
+        time.replace("T", "")
+        bike_id += 1
+        formattedData = {'x': gpsData[0], 'y': gpsData[1], 'bike_id': bike_id, 'time': time}
+        listOfBikes.append(formattedData)
+    return listOfBikes

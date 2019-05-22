@@ -1,8 +1,9 @@
 from flask import Flask, render_template, jsonify
 from forms import *  # Mark the files containing folder as "source root" to avoid errors
 import db
-#import gps
+import gps
 import psycopg2
+
 
 def connection():
     connection = psycopg2.connect(user=db.user(),
@@ -24,20 +25,19 @@ def get_DB(query):
         print("Error while fetching data from PostgreSQL", error)
 
 
-# def update():
-#    print(gps.get())
-#    gpsData = gps.get()
-#    con = connection()
-#    cursor = con.cursor()
-#    cursor.execute("UPDATE coordinates SET x = {}, y = {} WHERE bike_id = {};".format(gpsData['x'],gpsData['y'],gpsData['bike_id']))
-#    con.commit()
-# update()
+def checkGPS():
+    gpsData = gps.get()
+    con = connection()
+    cursor = con.cursor()
+    for bike in gpsData:
+        cursor.execute("UPDATE coordinates SET x = {}, y = {}, time = {} WHERE bike_id = {};".format(bike['x'],bike['y'],bike['bike_id'],bike['time']))
+        con.commit()
 
 
 def get_table_data():
     SQL_list = []
     for row in get_DB("SELECT * FROM coordinates"):
-        a = {'bike_id': row[3], 'name': row[0], 'x': row[1], 'y': row[2]}
+        a = {'bike_id': row[3], 'name': row[0], 'x': row[1], 'y': row[2], 'time': row[4]}
         SQL_list.append(a)
     return SQL_list
 
@@ -70,6 +70,7 @@ def map():
 
 @app.route("/update")
 def update():
+    checkGPS()
     jsonStr = get_DB("SELECT bike_id, row_to_json((SELECT d FROM (SELECT x, y) d)) AS bikes FROM coordinates")
     return jsonify(bikes=jsonStr)
 
