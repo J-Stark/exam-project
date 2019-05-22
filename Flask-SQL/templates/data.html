@@ -1,0 +1,27 @@
+<!-- This is the data page not home page -->
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Database View</h1>
+
+<div class="container">
+  <h2>Here you can see our entries in our database.</h2>
+  <table id="table_id" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Bike ID</th>
+        <th>Bike X Coord</th>
+        <th>Bike Y Coord</th>
+      </tr>
+    </thead>
+    {% for post in posts | sort(attribute='bike_id')%}
+    <tbody>
+      <tr>
+        <td>{{post.bike_id}}</td>
+        <td>{{post.x}}</td>
+        <td>{{post.y}}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% endblock content %} <!-- The content part is not necessary it is just to keep track of what block is being ended -->

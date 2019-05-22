@@ -9,36 +9,34 @@
         width: 100%;  /* The width is the width of the web page */
        }
     </style>
-    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
     var globalMap;
     var markers = [];
-    var increment = 0;
     function initMap()
     {
+        var delay = 5000;
         var Aarhus = {lat: 56.1629, lng: 10.2039};
         globalMap = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: Aarhus});
-        setInterval(setMarker, 5000);
+        setMarker();
+        setInterval(setMarker, delay);
     }
     function setMarker()
     {
       deleteMarkers();
-      console.log(getData())
-      {% for post in posts %}
-      var x = {{post.x}};
-      var y = {{post.y}};
-      var bicycle = {lat: x, lng: y};
-      var marker = new google.maps.Marker({position: bicycle, map: globalMap, title: "{{post.name}}" });
-      marker.setMap(globalMap);
-      markers.push(marker);
-      {% endfor %}
-    }
-    function getData()
-    {
-      var names = [];
-      {% for item in map_data()%}
-        names.push({{item.x}});
-      {%endfor%}
-      return names;
+      var finalJson = $.getJSON('/update', function (data)
+      {
+        var amountOfBikes = Object.keys(data['bikes']).length;
+        for (var i = 0; i<amountOfBikes;i++)
+        {
+          var x = data['bikes'][i][1]['x'];
+          var y = data['bikes'][i][1]['y'];
+          var bicycle = {lat: x, lng: y};
+          var marker = new google.maps.Marker({position: bicycle, map: globalMap, title: "Bike" + (i + 1)});
+          marker.setMap(globalMap);
+          markers.push(marker);
+        }
+      });
     }
     function deleteMarkers()
     {
@@ -52,7 +50,6 @@
     <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdpjLyPIWGT6BWAqpTBBNknZGPenAo7DA&callback=initMap">
     </script>
-    <script type = "type/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <br>
 <br>
     <div class="content-section">
