@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button class="button" onclick='location.href="/logout"'>Log Out</button>
+<p> Hi {{username}}! </p>
+<p> You have <b>bicycle{{rented}}</b> rented right now!</p>
+<p> You have <b>{{credits}}</b> dkk on your account right now!</p>
+
+
+<button class="button" onclick='location.href="/rental"'>Rent a bike</button>
+<button class="button" onclick='location.href="/return"'>Return a bike</button>
+<button class="button" onclick='location.href="/credits"'>Add credits to your acacount</button>
+
+<br><br><br>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

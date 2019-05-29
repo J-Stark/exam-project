@@ -1,0 +1,24 @@
+availblity    rent_date    bike_name
+------------  -----------  ---------------
+                           Erhvervsakademi
+                           Rutebilstation
+                           Hovedbanegård
+                           Q
+                           test
+                           tester
+                           qerye
+                           testaga
+                           testData
+                           Gellerup
+                           finalTest
+                           Glenn
+                           Glenn4
+                           Glenn7
+                           Glenn17
+                           test
+                           test
+                           qqqq
+                           testnameusername    password    rented    credits
+----------  ----------  --------  ---------
+Admin       Pass
+test        test

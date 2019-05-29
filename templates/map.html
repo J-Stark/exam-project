@@ -1,0 +1,79 @@
+{% extends "layout.html"%}
+{% block content%}
+
+<div id="map"></div>
+<style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 800px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    var globalMap;
+    var markers = [];
+    function initMap()
+    {
+        var delay = 5000;
+        var Aarhus = {lat: 56.1629, lng: 10.2039};
+        globalMap = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: Aarhus});
+        setMarker();
+        setInterval(setMarker, delay);
+    }
+    function setMarker()
+    {
+      deleteMarkers();
+      var finalJson = $.getJSON('/update', function (data)
+      {
+        var amountOfBikes = Object.keys(data['bikes']).length;
+        for (var i = 0; i<amountOfBikes;i++)
+        {
+          var x = data['bikes'][i][1]['x'];
+          var y = data['bikes'][i][1]['y'];
+          var bicycle = {lat: x, lng: y};
+          var marker = new google.maps.Marker({position: bicycle, map: globalMap, title: "Bike" + (i + 1)});
+          marker.setMap(globalMap);
+          markers.push(marker);
+        }
+      });
+    }
+    function deleteMarkers()
+    {
+      for (var i = 0; i < markers.length; i++)
+      {
+        markers[i].setMap(null);
+      }
+      markers = [];
+    }
+    </script>
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdpjLyPIWGT6BWAqpTBBNknZGPenAo7DA&callback=initMap">
+    </script>
+<br>
+<br>
+    <div class="content-section">
+        <form method="POST" action="">
+            <fieldset class="form-group">
+                <br>
+                <br>
+                <legend class="border-bottom mb-10">Add your data</legend>
+                <div class="form-group">
+                    {{ form.nameData.label(class="form-control-label") }}:
+                    {{ form.nameData(class="form-control form-control-lg" , autocomplete="off") }}
+                </div>
+                <div class="form-group">
+                    {{ form.xData.label(class="form-control-label") }}
+                    {{ form.xData(class="form-control form-control-lg" , autocomplete="off") }}
+                </div>
+                <div class="form-group">
+                    {{ form.yData.label(class="form-control-label") }}
+                    {{ form.yData(class="form-control form-control-lg" , autocomplete="off") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content%} <!-- The content part is not necessary it is just to keep track of what block is being ended -->

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rent me!</title>
+</head>
+<body>
+<button class="button" onclick='location.href="/user_profile"'>Back</button>
+<script type = "type/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<p>Rent me!</p>
+<button class="button" onclick='location.href="/bike1"'>Bike 1</button>
+<button class="button" onclick='location.href="/bike2"'>Bike 2</button>
+<button class="button" onclick='location.href="/bike3"'>Bike 3</button>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</body>
+</html>

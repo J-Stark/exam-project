@@ -1,0 +1,24 @@
+  availblity  bike_name          rent_date
+------------  ---------------  -----------
+     56.1203  Erhvervsakademi      10.1604
+     56.1521  Rutebilstation       10.2093
+     56.1497  Hovedbanegård        10.2041
+     56.1497  Q                    10.2041
+     12       test                 13
+     24       tester               26
+     36       qerye              7726
+    666       testaga              66
+     85       testData             94
+     56.1529  Gellerup             10.1346
+     44       finalTest            44
+     47       Glenn                74
+     17       Glenn4               14
+    100       Glenn7              140
+    999       Glenn17             140
+     55       test                 77
+    999       test                999
+    111       qqqq                111
+    666       testname            666rented    username    credits    password
+--------  ----------  ---------  ----------
+          Admin                  Pass
+          test                   test
